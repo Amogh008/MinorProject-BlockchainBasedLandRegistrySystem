@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
-// import { SocketContext } from "../../context/SocketContext";
+import React from "react";
 
-export const MainDash = () => {
-  // const { dashStatus } = useContext(SocketContext);
+const MainDash = () => {
   return <div>MainDash</div>;
 };
+
+export default MainDash;

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import "./Sidebar.css";
 import Logo from "./../../images/pngegg.png";
-import { SidebarData } from "../data/UserSidebarData";
+import { LandInspectorSidebarData } from "../data/LandInspectorData";
 import { useNavigate } from "react-router";
 const Sidebar = () => {
   const [selected, setSelected] = useState(0);
-  // const { setDashStatus } = useContext(SocketContext);
+
   const navigate = useNavigate();
   const [toogle, setToogle] = useState(false);
   const selectMenuItem = (index, newState) => {
     setSelected(index);
-    // setDashStatus(newState);
+
     if (toogle) {
       navigate("/user");
       setToogle(!toogle);
@@ -29,17 +29,17 @@ const Sidebar = () => {
       </div>
 
       <div className="menu">
-        {SidebarData.map((item, index) => {
+        {LandInspectorSidebarData.map((item, index) => {
           return (
             <div
               className={selected === index ? "menuItem active" : "menuItem"}
               key={index}
-              onClick={() => selectMenuItem(index, item.heading)}
+              onClick={() => selectMenuItem(index, item.title)}
             >
               <div className="Icon">
                 <item.icon />
               </div>{" "}
-              <span>{item.heading}</span>
+              <span>{item.title}</span>
             </div>
           );
         })}
