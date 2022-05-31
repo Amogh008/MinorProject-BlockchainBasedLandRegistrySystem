@@ -12,10 +12,10 @@ const Sidebar = () => {
     setSelected(index);
 
     if (toogle) {
-      navigate("/user");
+      navigate("/user/home");
       setToogle(!toogle);
     } else {
-      navigate("/");
+      navigate("/user/mainDash");
       setToogle(!toogle);
     }
   };

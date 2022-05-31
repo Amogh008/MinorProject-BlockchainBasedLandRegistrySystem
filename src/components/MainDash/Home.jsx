@@ -10,6 +10,8 @@ const Home = () => {
     };
     getAccountAddress();
   }, []);
-  return <div className="co">{accountAddress}</div>;
+  return (
+    <div className="co">Contract deployed at address {accountAddress}</div>
+  );
 };
 export default Home;
