@@ -1,0 +1,44 @@
+.Sidebar {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-top: 2rem;
+  transition: all 300ms ease;
+}
+
+.logo {
+  height: 5rem;
+  font-weight: bold;
+  font-size: 22px;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  height: 4%;
+  padding-left: 1rem;
+}
+
+.logo > img {
+  width: 3rem;
+  height: 3rem;
+}
+
+.logo > span > span {
+  color: #2f8f9d;
+}
+
+.login-btn {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 10rem;
+  font-family: bold;
+}
+
+.login-btn button {
+  height: 4rem;
+  background-color: #fbab7e;
+  background-image: linear-gradient(62deg, #fbab7e 0%, #f7ce68 100%);
+  font-size: 1.5rem;
+  border-radius: 25px;
+}

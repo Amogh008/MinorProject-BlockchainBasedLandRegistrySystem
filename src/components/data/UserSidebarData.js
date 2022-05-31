@@ -35,6 +35,6 @@ export const SidebarData = [
   },
   {
     icon: UilSignOutAlt,
-    heading: "Sign out"
+    heading: "Sign Out"
   }
 ];

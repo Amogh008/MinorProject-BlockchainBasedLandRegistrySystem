@@ -1,9 +1,8 @@
 import "./App.css";
 import User from "./components/MainDash/User";
 import { Routes, Route } from "react-router-dom";
-import MainDash from "./components/MainDash/MainDash";
 import LandInspector from "./components/MainDash/LandInspector";
-import pngegg from "./images/pngegg.png";
+
 import UserDashboard from "./components/MainDash/UserMainDash/Dashboard";
 import MyLands from "./components/MainDash/UserMainDash/MyLands";
 import AddLand from "./components/MainDash/UserMainDash/AddLands";
@@ -14,6 +13,7 @@ import InspectorDashboard from "./components/MainDash/InspectorMainDash/Dashboar
 import TransferOwnership from "./components/MainDash/InspectorMainDash/TransferOwnership";
 import VerifyLand from "./components/MainDash/InspectorMainDash/VerifyLands";
 import VerifyUser from "./components/MainDash/InspectorMainDash/VerifyUser";
+import SignIn from "./components/MainDash/SignIn/SignIn";
 function App() {
   return (
     <div className="App">
@@ -24,8 +24,7 @@ function App() {
             path="/"
             element={
               <div>
-                <MainDash />
-                <img src={pngegg} alt="logo" />
+                <SignIn />
               </div>
             }
           />

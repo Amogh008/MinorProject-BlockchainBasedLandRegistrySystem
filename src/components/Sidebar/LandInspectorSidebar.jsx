@@ -11,8 +11,12 @@ const Sidebar = () => {
   const selectMenuItem = (index, newState) => {
     setSelected(index);
 
-    const route = newState.split(" ").join("");
-    navigate("/inspector/" + route);
+    if (newState === "Sign Out") {
+      navigate("/");
+    } else {
+      const route = newState.split(" ").join("");
+      navigate("/inspector/" + route);
+    }
   };
   return (
     <div className="Sidebar">
