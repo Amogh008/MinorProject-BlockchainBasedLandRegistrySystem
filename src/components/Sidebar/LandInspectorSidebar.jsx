@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Sidebar.css";
 import Logo from "./../../images/pngegg.png";
 import { LandInspectorSidebarData } from "../data/LandInspectorData";
 import { useNavigate } from "react-router";
+import { SocketContext } from "../../context/SocketContext";
 const Sidebar = () => {
   const [selected, setSelected] = useState(0);
-
+  const { setLoggedIn, setClient } = useContext(SocketContext);
   const navigate = useNavigate();
 
   const selectMenuItem = (index, newState) => {
     setSelected(index);
 
     if (newState === "Sign Out") {
-      navigate("/");
+      setClient("");
+      setLoggedIn(false);
+      navigate("/inspector/Dashboard");
     } else {
       const route = newState.split(" ").join("");
       navigate("/inspector/" + route);
