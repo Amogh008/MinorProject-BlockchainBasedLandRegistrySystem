@@ -3,22 +3,14 @@ import "./Sidebar.css";
 import Logo from "./../../images/pngegg.png";
 import { SidebarData } from "../data/UserSidebarData";
 import { useNavigate } from "react-router";
-// import { Outlet } from "react-router-dom";
 const Sidebar = () => {
   const [selected, setSelected] = useState(0);
-  // const { setDashStatus } = useContext(SocketContext);
   const navigate = useNavigate();
-  const [toogle, setToogle] = useState(false);
+
   const selectMenuItem = (index, newState) => {
     setSelected(index);
-    // setDashStatus(newState);
-    if (toogle) {
-      navigate("/user/home");
-      setToogle(!toogle);
-    } else {
-      navigate("/user/mainDash");
-      setToogle(!toogle);
-    }
+    const route = newState.split(" ").join("");
+    navigate("/user/" + route);
   };
   return (
     <div className="Sidebar">

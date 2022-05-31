@@ -7,17 +7,12 @@ const Sidebar = () => {
   const [selected, setSelected] = useState(0);
 
   const navigate = useNavigate();
-  const [toogle, setToogle] = useState(false);
+
   const selectMenuItem = (index, newState) => {
     setSelected(index);
 
-    if (toogle) {
-      navigate("/user/home");
-      setToogle(!toogle);
-    } else {
-      navigate("/user/mainDash");
-      setToogle(!toogle);
-    }
+    const route = newState.split(" ").join("");
+    navigate("/inspector/" + route);
   };
   return (
     <div className="Sidebar">
