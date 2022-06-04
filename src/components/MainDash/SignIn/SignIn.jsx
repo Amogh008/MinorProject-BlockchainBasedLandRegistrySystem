@@ -3,26 +3,54 @@ import Logo from "./../../../images/pngegg.png";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { SocketContext } from "../../../context/SocketContext";
-import web3 from "./../../../web3";
 const SignIn = () => {
   const { setLoggedIn, setClient } = useContext(SocketContext);
   const navigate = useNavigate();
   const userLogin = async () => {
-    await web3.eth.getAccounts();
-    setLoggedIn(true);
-    setClient("user");
+    if (window.ethereum) {
+      try {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        setLoggedIn(true);
+        setClient("user");
+        alert("Please connect the meatmask wallet ");
+      } catch (err) {
+        alert("Please connect the meatmask wallet ");
+      }
 
-    navigate("/user/Dashboard");
+      navigate("/user/Dashboard");
+    } else {
+      alert("Install meta mask");
+    }
   };
   const inspectorLogin = async () => {
-    await web3.eth.getAccounts();
-    setLoggedIn(true);
-    setClient("inspector");
+    if (window.ethereum) {
+      try {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        setLoggedIn(true);
+        setClient("user");
+      } catch (err) {
+        alert("Please connect the meatmask wallet ");
+      }
 
-    navigate("/inspector/Dashboard");
+      navigate("/inspector/Dashboard");
+    } else {
+      alert("Install meta mask");
+    }
   };
-  const ownerLogin = () => {
-    navigate("/user/Dashboard");
+  const ownerLogin = async () => {
+    if (window.ethereum) {
+      try {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        setLoggedIn(true);
+        setClient("user");
+      } catch (err) {
+        alert("Please connect the meatmask wallet ");
+      }
+
+      navigate("/inspector/Dashboard");
+    } else {
+      alert("Install meta mask");
+    }
   };
   return (
     <div className="Sidebar">

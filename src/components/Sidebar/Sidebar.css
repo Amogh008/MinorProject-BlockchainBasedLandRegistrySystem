@@ -21,9 +21,11 @@
   width: 3rem;
   height: 3rem;
 }
-
+.logo > span {
+  color: #657f00;
+}
 .logo > span > span {
-  color: #2f8f9d;
+  color: #a54405;
 }
 
 .menu {
@@ -50,7 +52,7 @@
 }
 
 .active {
-  background-color: var(--activeItem);
+  background-color: #667f00b0;
   margin-left: 0;
 }
 
@@ -58,7 +60,7 @@
   content: "";
   width: 8px;
   height: 100%;
-  background-color: pink;
+  background-color: #a54405;
   margin-right: calc(1rem - 8px);
 }
 
