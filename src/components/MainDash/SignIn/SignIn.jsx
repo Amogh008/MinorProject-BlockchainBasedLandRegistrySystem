@@ -3,18 +3,23 @@ import Logo from "./../../../images/pngegg.png";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { SocketContext } from "../../../context/SocketContext";
+import { web3, Land } from "./../../../Contract/LandContract";
 const SignIn = () => {
-  const { setLoggedIn, setClient } = useContext(SocketContext);
+  const { setLoggedIn, setWadd, setIsUser, setIsInspector } = useContext(
+    SocketContext
+  );
   const navigate = useNavigate();
   const userLogin = async () => {
     if (window.ethereum) {
       try {
         await window.ethereum.request({ method: "eth_requestAccounts" });
+        const address = await web3.eth.getAccounts();
+
+        setWadd(address[0]);
+        setIsUser(true);
         setLoggedIn(true);
-        setClient("user");
-        alert("Please connect the meatmask wallet ");
       } catch (err) {
-        alert("Please connect the meatmask wallet ");
+        alert("Connect to metamask account");
       }
 
       navigate("/user/Dashboard");
@@ -26,32 +31,39 @@ const SignIn = () => {
     if (window.ethereum) {
       try {
         await window.ethereum.request({ method: "eth_requestAccounts" });
-        setLoggedIn(true);
-        setClient("user");
+        const address = await web3.eth.getAccounts();
+        const isOk = await Land.methods.isLandInspector(address[0]).call();
+        if (!isOk) {
+          alert("Not registered Inspector");
+          window.location.reload();
+        } else {
+          setWadd(address[0]);
+          setIsInspector(true);
+          setLoggedIn(true);
+          navigate("/inspector/Dashboard");
+        }
       } catch (err) {
         alert("Please connect the meatmask wallet ");
       }
-
-      navigate("/inspector/Dashboard");
     } else {
       alert("Install meta mask");
     }
   };
-  const ownerLogin = async () => {
-    if (window.ethereum) {
-      try {
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        setLoggedIn(true);
-        setClient("user");
-      } catch (err) {
-        alert("Please connect the meatmask wallet ");
-      }
+  // const ownerLogin = async () => {
+  //   if (window.ethereum) {
+  //     try {
+  //       await window.ethereum.request({ method: "eth_requestAccounts" });
+  //       setLoggedIn(true);
 
-      navigate("/inspector/Dashboard");
-    } else {
-      alert("Install meta mask");
-    }
-  };
+  //     } catch (err) {
+  //       alert("Please connect the meatmask wallet ");
+  //     }
+
+  //     navigate("/inspector/Dashboard");
+  //   } else {
+  //     alert("Install meta mask");
+  //   }
+  // };
   return (
     <div className="Sidebar">
       <div className="logo">
@@ -72,9 +84,9 @@ const SignIn = () => {
         >
           Land Inspector
         </button>
-        <button className="owner-btn btn-grad" onClick={(e) => ownerLogin()}>
+        {/* <button className="owner-btn btn-grad" onClick={(e) => ownerLogin()}>
           Contract Owner
-        </button>
+        </button> */}
       </div>
     </div>
   );

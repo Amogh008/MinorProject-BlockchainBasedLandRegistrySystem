@@ -3,10 +3,24 @@ const SocketContext = createContext();
 
 const ContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [client, setClient] = useState("");
+  const [wadd, setWadd] = useState("");
+  const [isUser, setIsUser] = useState(false);
+  const [isInspector, setIsInspector] = useState(false);
+  const [selected, setSelected] = useState(0);
   return (
     <SocketContext.Provider
-      value={{ loggedIn, setLoggedIn, client, setClient }}
+      value={{
+        loggedIn,
+        setLoggedIn,
+        isUser,
+        setIsUser,
+        isInspector,
+        setIsInspector,
+        wadd,
+        setWadd,
+        selected,
+        setSelected
+      }}
     >
       {children}
     </SocketContext.Provider>

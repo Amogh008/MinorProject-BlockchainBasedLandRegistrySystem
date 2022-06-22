@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { SocketContext } from "../../../context/SocketContext";
 import { Land } from "./../../../Contract/LandContract";
 
-import { web3 } from "./../../../Contract/LandContract";
 import "./Dashboard.css";
+
 const Dashboard = () => {
+  const { wadd } = useContext(SocketContext);
+
+  // window.ethereum.on("accountsChanged", function (accounts) {
+  //   setWadd(accounts[0]);
+  // });
   useEffect(() => {
     const checkManager = async () => {
-      const accounts = await web3.eth.getAccounts();
-
-      const verified = await Land.methods.isUserVerified(accounts[0]).call();
+      const verified = await Land.methods.isUserVerified(wadd).call();
       if (verified) {
-        const user = await Land.methods.UserMapping(accounts[0]).call();
+        const user = await Land.methods.UserMapping(wadd).call();
         setName(user.name);
         setAge(user.age);
         setAdhar(user.aadharNumber);

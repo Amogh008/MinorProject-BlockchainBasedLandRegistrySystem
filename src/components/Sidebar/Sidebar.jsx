@@ -1,19 +1,28 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import "./Sidebar.css";
 import Logo from "./../../images/pngegg.png";
 import { SidebarData } from "../data/UserSidebarData";
 import { useNavigate } from "react-router";
 import { SocketContext } from "../../context/SocketContext";
 const Sidebar = () => {
-  const [selected, setSelected] = useState(0);
+  window.ethereum.on("accountsChanged", function (accounts) {
+    setWadd(accounts[0]);
+    navigate("/user/Dashboard");
+    setSelected(0);
+  });
+  const { setLoggedIn, setIsUser, setWadd, selected, setSelected } = useContext(
+    SocketContext
+  );
+
   const navigate = useNavigate();
-  const { setLoggedIn, setClient } = useContext(SocketContext);
   const selectMenuItem = (index, newState) => {
     setSelected(index);
     if (newState === "Sign Out") {
-      setClient("");
+      setIsUser(false);
       setLoggedIn(false);
-      navigate("/user/Dashboard");
+      setSelected(0);
+      setWadd("");
+      navigate("/", { replace: true });
     } else {
       const route = newState.split(" ").join("");
       navigate("/user/" + route);

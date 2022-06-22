@@ -17,7 +17,8 @@ import { useContext } from "react";
 import { SocketContext } from "./context/SocketContext";
 
 function App() {
-  const { loggedIn } = useContext(SocketContext);
+  const { loggedIn, isUser, isInspector } = useContext(SocketContext);
+
   return (
     <div className="App">
       <div className="AppGlass">
@@ -33,7 +34,9 @@ function App() {
           />
           <Route
             path="user"
-            element={loggedIn ? <User /> : <Navigate replace to="/" />}
+            element={
+              loggedIn && isUser ? <User /> : <Navigate replace to="/" />
+            }
           >
             <Route path="Dashboard" element={<UserDashboard />} />
             <Route path="AddLand" element={<AddLand />} />
@@ -44,7 +47,13 @@ function App() {
           </Route>
           <Route
             path="inspector"
-            element={loggedIn ? <LandInspector /> : <Navigate replace to="/" />}
+            element={
+              loggedIn && isInspector ? (
+                <LandInspector />
+              ) : (
+                <Navigate replace to="/" />
+              )
+            }
           >
             <Route path="Dashboard" element={<InspectorDashboard />} />
             <Route path="verifyUser" element={<VerifyUser />} />

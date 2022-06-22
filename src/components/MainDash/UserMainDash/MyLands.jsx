@@ -23,8 +23,21 @@ const MyLands = () => {
   console.log(arr);
   return (
     <div className="co">
-      This page which holds the transaction to the contract is under
-      construction
+      {/* <table>
+      <thead>
+       <tr>
+        <th>Area</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>Price</th>
+        <th>Survey Number</th>
+       </tr>
+    </thead>
+    <tbody>
+      {arr.map((el) => {
+        return (<p key={el[0]}>{el["ownerAddress"]}</p>
+        );
+      })} */}
     </div>
   );
 };
