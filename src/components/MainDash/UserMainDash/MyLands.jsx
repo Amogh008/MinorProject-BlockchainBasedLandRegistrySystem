@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { SocketContext } from "../../../context/SocketContext";
 import { Land, web3 } from "../../../Contract/LandContract";
 
 const MyLands = () => {
+  const { wadd } = useContext(SocketContext);
   const [arr, setArr] = useState([]);
+  const [toggle, setToggle] = useState(true);
   useEffect(() => {
     const fetchMyLands = async () => {
       const accounts = await web3.eth.getAccounts();
@@ -19,8 +22,18 @@ const MyLands = () => {
       );
     };
     fetchMyLands();
-  }, []);
-
+  }, [toggle]);
+  const markForSale = async (e) => {
+    try {
+      await Land.methods.makeItforSell(e.target.value).send({
+        from: wadd
+      });
+      setToggle(!toggle);
+      alert("Marked Land for sale");
+    } catch (err) {
+      alert(err);
+    }
+  };
   return (
     <div className="co">
       <table class="table table-striped table-dark">
@@ -51,6 +64,8 @@ const MyLands = () => {
                 <td>{el["physicalSurveyNumber"]}</td>
                 <td>
                   <button
+                    value={el[0]}
+                    onClick={(e) => markForSale(e)}
                     disabled={el["isforSell"] || !el["isLandVerified"]}
                     className={
                       el["isforSell"]

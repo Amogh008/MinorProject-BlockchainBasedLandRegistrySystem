@@ -22,10 +22,8 @@ const Sidebar = () => {
     setSelected(index);
 
     if (newState === "Sign Out") {
-      setIsInspector(false);
       setWadd("");
-      setSelected(0);
-      setLoggedIn(false);
+
       window.location.reload();
     } else {
       const route = newState.split(" ").join("");

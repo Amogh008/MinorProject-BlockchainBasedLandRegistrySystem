@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Land } from "../../../Contract/LandContract";
+import { SocketContext } from "../../../context/SocketContext";
+
 const VerifyUser = () => {
+  const { wadd } = useContext(SocketContext);
   const [arr, setArr] = useState([]);
   const [toggle, setToggle] = useState(true);
   useEffect(() => {
@@ -16,24 +19,33 @@ const VerifyUser = () => {
         })
       );
 
-      await Promise.all(
+      const userDetails = await Promise.all(
         unVerified.map(async (e) => {
-          const user = await Land.methods.UserMapping(e).call();
-          setArr([...arr, user]);
+          return await Land.methods.UserMapping(e).call();
         })
       );
+      setArr(userDetails);
     };
     fetchData();
-  }, []);
+  }, [toggle]);
 
-  const handleVerify = (e) => {
-    alert(e.target.key);
+  const handleVerify = async (e) => {
+    try {
+      await Land.methods.verifyUser(e.target.value).send({
+        from: wadd
+      });
+
+      setToggle(!toggle);
+      alert("User verified");
+    } catch (err) {
+      console.log("Error in verifying user");
+    }
   };
   console.log(arr);
 
   return (
     <div className="co">
-      <table class="table table-striped table-dark">
+      <table className="table table-striped table-dark">
         <thead>
           <tr>
             <th>User Name</th>
@@ -57,7 +69,7 @@ const VerifyUser = () => {
                 <td>{el["email"]}</td>
                 <td>
                   <button
-                    key={el["id"]}
+                    value={el["id"]}
                     onClick={(e) => handleVerify(e)}
                     className="btn btn-success"
                   >
