@@ -4,12 +4,11 @@ import Logo from "./../../images/pngegg.png";
 import { SidebarData } from "../data/UserSidebarData";
 import { useNavigate } from "react-router";
 import { SocketContext } from "../../context/SocketContext";
+window.ethereum.on("accountsChanged", function (accounts) {
+  alert("account changed detected login again");
+  window.location.reload();
+});
 const Sidebar = () => {
-  window.ethereum.on("accountsChanged", function (accounts) {
-    setWadd(accounts[0]);
-    navigate("/user/Dashboard");
-    setSelected(0);
-  });
   const { setLoggedIn, setIsUser, setWadd, selected, setSelected } = useContext(
     SocketContext
   );
@@ -18,11 +17,11 @@ const Sidebar = () => {
   const selectMenuItem = (index, newState) => {
     setSelected(index);
     if (newState === "Sign Out") {
+      window.location.reload();
       setIsUser(false);
       setLoggedIn(false);
       setSelected(0);
       setWadd("");
-      navigate("/", { replace: true });
     } else {
       const route = newState.split(" ").join("");
       navigate("/user/" + route);

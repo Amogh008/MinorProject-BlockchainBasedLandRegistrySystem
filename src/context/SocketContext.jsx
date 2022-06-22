@@ -7,6 +7,8 @@ const ContextProvider = ({ children }) => {
   const [isUser, setIsUser] = useState(false);
   const [isInspector, setIsInspector] = useState(false);
   const [selected, setSelected] = useState(0);
+  const [isReg, setIsReg] = useState(false);
+  const [isVer, setIsVer] = useState(false);
   return (
     <SocketContext.Provider
       value={{
@@ -19,7 +21,11 @@ const ContextProvider = ({ children }) => {
         wadd,
         setWadd,
         selected,
-        setSelected
+        setSelected,
+        isReg,
+        setIsReg,
+        isVer,
+        setIsVer
       }}
     >
       {children}

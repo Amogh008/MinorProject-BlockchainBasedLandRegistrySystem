@@ -4,12 +4,11 @@ import Logo from "./../../images/pngegg.png";
 import { LandInspectorSidebarData } from "../data/LandInspectorData";
 import { useNavigate } from "react-router";
 import { SocketContext } from "../../context/SocketContext";
+window.ethereum.on("accountsChanged", function (accounts) {
+  alert("account changed detected login again");
+  window.location.reload();
+});
 const Sidebar = () => {
-  window.ethereum.on("accountsChanged", function (accounts) {
-    setWadd(accounts[0]);
-    setSelected(0);
-    window.location.reload();
-  });
   const {
     setLoggedIn,
     setIsInspector,
@@ -27,7 +26,7 @@ const Sidebar = () => {
       setWadd("");
       setSelected(0);
       setLoggedIn(false);
-      navigate("/", { replace: true });
+      window.location.reload();
     } else {
       const route = newState.split(" ").join("");
       navigate("/inspector/" + route);
