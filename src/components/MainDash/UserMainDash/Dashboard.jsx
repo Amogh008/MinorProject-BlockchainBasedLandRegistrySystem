@@ -6,10 +6,13 @@ import { Land } from "./../../../Contract/LandContract";
 import "./Dashboard.css";
 
 const Dashboard = () => {
-  const { wadd, setIsReg, setIsVer, isVer, isReg } = useContext(SocketContext);
+  const { wadd, setIsReg, setIsVer, isVer, isReg, setLoading } = useContext(
+    SocketContext
+  );
 
   useEffect(() => {
     const checkManager = async () => {
+      setLoading(true);
       const registered = await Land.methods.isUserRegistered(wadd).call();
       if (registered) {
         const verified = await Land.methods.isUserVerified(wadd).call();
@@ -24,9 +27,11 @@ const Dashboard = () => {
         if (verified) {
           setIsReg(true);
           setIsVer(true);
+          setLoading(false);
         } else {
           setIsVer(false);
           setIsReg(true);
+          setLoading(false);
         }
       } else {
         setName("");
@@ -38,6 +43,7 @@ const Dashboard = () => {
         setDocument("");
         setIsReg(false);
         setIsVer(false);
+        setLoading(false);
       }
     };
     checkManager();

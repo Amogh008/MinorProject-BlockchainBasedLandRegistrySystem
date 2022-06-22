@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import "./AddLands.css";
 import { Land } from "./../../../Contract/LandContract";
 
 import { web3 } from "./../../../Contract/LandContract";
+import { SocketContext } from "../../../context/SocketContext";
 const AddLands = () => {
-  let accounts;
+  const { setLoading, wadd } = useContext(SocketContext);
+
   useEffect(() => {
-    const getAcc = async () => {
-      accounts = await web3.eth.getAccounts();
-    };
+    const getAcc = async () => {};
     getAcc();
   }, []);
   const [Area, setArea] = useState();
@@ -47,6 +47,7 @@ const AddLands = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     if (
       Area <= 0 ||
@@ -58,6 +59,7 @@ const AddLands = () => {
       Address.trim() === ""
     ) {
       alert("Fill all feilds to procees");
+      setLoading(false);
     } else {
       try {
         await Land.methods
@@ -71,12 +73,13 @@ const AddLands = () => {
             Document.trim()
           )
           .send({
-            from: accounts[0]
+            from: wadd
           });
+        setLoading(false);
         alert("Added land");
       } catch (e) {
-        alert(e);
         alert("Error in adding land try again..check balance");
+        setLoading(false);
       } finally {
         setArea(0);
         setLandPrice(0);

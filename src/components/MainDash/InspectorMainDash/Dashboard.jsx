@@ -3,15 +3,17 @@ import React, { useContext, useEffect, useState } from "react";
 import { SocketContext } from "../../../context/SocketContext";
 import { Land } from "../../../Contract/LandContract";
 const Dashboard = () => {
-  const { wadd } = useContext(SocketContext);
+  const { wadd, setLoading } = useContext(SocketContext);
 
   useEffect(() => {
     const checkInspector = async () => {
+      setLoading(true);
       const ins = await Land.methods.InspectorMapping(wadd).call();
       setName(ins["name"]);
       setAge(ins["age"]);
       setCity(ins["designation"]);
       setDesignation(ins["city"]);
+      setLoading(false);
     };
     checkInspector();
   }, []);

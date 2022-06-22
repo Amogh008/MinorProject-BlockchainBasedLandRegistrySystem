@@ -9,6 +9,7 @@ const ContextProvider = ({ children }) => {
   const [selected, setSelected] = useState(0);
   const [isReg, setIsReg] = useState(false);
   const [isVer, setIsVer] = useState(false);
+  const [loading, setLoading] = useState(false);
   return (
     <SocketContext.Provider
       value={{
@@ -25,7 +26,9 @@ const ContextProvider = ({ children }) => {
         isReg,
         setIsReg,
         isVer,
-        setIsVer
+        setIsVer,
+        loading,
+        setLoading
       }}
     >
       {children}

@@ -3,11 +3,12 @@ import { SocketContext } from "../../../context/SocketContext";
 import { Land, web3 } from "../../../Contract/LandContract";
 
 const MyLands = () => {
-  const { wadd } = useContext(SocketContext);
+  const { wadd, setLoading } = useContext(SocketContext);
   const [arr, setArr] = useState([]);
   const [toggle, setToggle] = useState(true);
   useEffect(() => {
     const fetchMyLands = async () => {
+      setLoading(true);
       const accounts = await web3.eth.getAccounts();
       const lands = await Land.methods.myAllLands(accounts[0]).call();
       await Promise.all(
@@ -20,17 +21,21 @@ const MyLands = () => {
             });
         })
       );
+      setLoading(false);
     };
     fetchMyLands();
   }, [toggle]);
   const markForSale = async (e) => {
     try {
+      setLoading(true);
       await Land.methods.makeItforSell(e.target.value).send({
         from: wadd
       });
       setToggle(!toggle);
       alert("Marked Land for sale");
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       alert(err);
     }
   };

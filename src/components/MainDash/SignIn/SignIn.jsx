@@ -5,20 +5,26 @@ import { useContext } from "react";
 import { SocketContext } from "../../../context/SocketContext";
 import { web3, Land } from "./../../../Contract/LandContract";
 const SignIn = () => {
-  const { setLoggedIn, setWadd, setIsUser, setIsInspector } = useContext(
-    SocketContext
-  );
+  const {
+    setLoggedIn,
+    setWadd,
+    setIsUser,
+    setIsInspector,
+    setLoading
+  } = useContext(SocketContext);
   const navigate = useNavigate();
   const userLogin = async () => {
     if (window.ethereum) {
       try {
+        setLoading(true);
         await window.ethereum.request({ method: "eth_requestAccounts" });
         const address = await web3.eth.getAccounts();
-
+        setLoading(false);
         setWadd(address[0]);
         setIsUser(true);
         setLoggedIn(true);
       } catch (err) {
+        setLoading(false);
         alert("Connect to metamask account");
       }
 

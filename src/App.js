@@ -17,7 +17,7 @@ import { useContext } from "react";
 import { SocketContext } from "./context/SocketContext";
 
 function App() {
-  const { loggedIn, isUser, isInspector } = useContext(SocketContext);
+  const { loggedIn, isUser, isInspector, loading } = useContext(SocketContext);
 
   return (
     <div className="App">
@@ -63,6 +63,15 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
+      {loading && (
+        <div className="loading">
+          <div className="balls">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
