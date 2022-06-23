@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SocketContext } from "../../../context/SocketContext";
 import { Land } from "../../../Contract/LandContract";
 import "./../Home.css";
@@ -7,13 +7,7 @@ const TransferOwnership = () => {
   const { wadd, setLoading } = useContext(SocketContext);
   const [arr, setArr] = useState([]);
   const [toggle, setToggle] = useState(true);
-  const status = [
-    "requested",
-    "accepted",
-    "rejected",
-    "payment done",
-    "completed"
-  ];
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);

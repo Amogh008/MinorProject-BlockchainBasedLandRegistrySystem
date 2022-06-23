@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SocketContext } from "../../../context/SocketContext";
 import { Land } from "../../../Contract/LandContract";
+import "./../Home.css";
 const VerifyLands = () => {
   const { wadd, setLoading } = useContext(SocketContext);
   const [arr, setArr] = useState([]);

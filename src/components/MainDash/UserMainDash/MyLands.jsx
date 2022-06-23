@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SocketContext } from "../../../context/SocketContext";
 import { Land, web3 } from "../../../Contract/LandContract";
-
+import "./../Home.css";
 const MyLands = () => {
   const { wadd, setLoading } = useContext(SocketContext);
   const [arr, setArr] = useState([]);
@@ -40,7 +40,7 @@ const MyLands = () => {
   return (
     <div className="co">
       <table class="table table-striped table-dark">
-        <thead>
+        <thead className={"ths"}>
           <tr>
             <th>Area</th>
             <th>Owner Address</th>

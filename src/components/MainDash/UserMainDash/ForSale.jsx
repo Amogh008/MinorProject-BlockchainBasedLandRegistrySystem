@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Land, web3 } from "../../../Contract/LandContract";
 import { SocketContext } from "../../../context/SocketContext";
-
+import "./../Home.css";
 const ForSale = () => {
   const { wadd, setLoading } = useContext(SocketContext);
   const [toggle, setToggle] = useState(true);
@@ -54,7 +54,7 @@ const ForSale = () => {
   return (
     <div className="co">
       <table class="table table-striped table-dark">
-        <thead>
+        <thead className={"ths"}>
           <tr>
             <th>Area</th>
             <th>Owner Address</th>
