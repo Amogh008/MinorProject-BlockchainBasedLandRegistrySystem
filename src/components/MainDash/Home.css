@@ -1,9 +1,14 @@
 .co {
   margin: 20px;
-  border: 2px solid white;
   border-radius: 20px;
-  display: flex;
-  align-items: center;
   justify-content: center;
   overflow-x: scroll;
+}
+.co::-webkit-scrollbar {
+  display: none;
+}
+.ths {
+  position: sticky;
+  top: 0;
+  background-color: black;
 }
