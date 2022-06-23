@@ -1,15 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Sidebar.css";
 import Logo from "./../../images/pngegg.png";
 import { SidebarData } from "../data/UserSidebarData";
 import { useNavigate } from "react-router";
 import { SocketContext } from "../../context/SocketContext";
-window.ethereum.on("accountsChanged", function (accounts) {
-  alert("account changed detected login again");
-  window.location.reload();
-});
+
 const Sidebar = () => {
-  const { setLoggedIn, setIsUser, setWadd, selected, setSelected } = useContext(
+  useEffect(() => {
+    window.ethereum.on("accountsChanged", function (accounts) {
+      setLoading(true);
+      setDetect(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    });
+  }, []);
+  const { setLoading, setDetect, setWadd, selected, setSelected } = useContext(
     SocketContext
   );
 
@@ -17,9 +23,10 @@ const Sidebar = () => {
   const selectMenuItem = (index, newState) => {
     setSelected(index);
     if (newState === "Sign Out") {
-      window.location.reload();
-
-      setWadd("");
+      setLoading(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     } else {
       const route = newState.split(" ").join("");
       navigate("/user/" + route);

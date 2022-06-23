@@ -1,30 +1,34 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Sidebar.css";
 import Logo from "./../../images/pngegg.png";
 import { LandInspectorSidebarData } from "../data/LandInspectorData";
 import { useNavigate } from "react-router";
 import { SocketContext } from "../../context/SocketContext";
-window.ethereum.on("accountsChanged", function (accounts) {
-  alert("account changed detected login again");
-  window.location.reload();
-});
+
 const Sidebar = () => {
-  const {
-    setLoggedIn,
-    setIsInspector,
-    setWadd,
-    selected,
-    setSelected
-  } = useContext(SocketContext);
+  useEffect(() => {
+    window.ethereum.on("accountsChanged", function (accounts) {
+      setLoading(true);
+      setDetect(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    });
+  }, []);
+  const { setDetect, setLoading, setWadd, selected, setSelected } = useContext(
+    SocketContext
+  );
   const navigate = useNavigate();
 
   const selectMenuItem = (index, newState) => {
     setSelected(index);
 
     if (newState === "Sign Out") {
-      setWadd("");
+      setLoading(true);
 
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     } else {
       const route = newState.split(" ").join("");
       navigate("/inspector/" + route);

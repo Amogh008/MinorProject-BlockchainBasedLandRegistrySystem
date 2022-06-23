@@ -3,11 +3,12 @@ import { Land } from "../../../Contract/LandContract";
 import { SocketContext } from "../../../context/SocketContext";
 
 const VerifyUser = () => {
-  const { wadd } = useContext(SocketContext);
+  const { wadd, setLoading } = useContext(SocketContext);
   const [arr, setArr] = useState([]);
   const [toggle, setToggle] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const userList = await Land.methods.ReturnAllUserList().call();
       const unVerified = [];
       await Promise.all(
@@ -19,26 +20,30 @@ const VerifyUser = () => {
         })
       );
 
-      const userDetails = await Promise.all(
+      await Promise.all(
         unVerified.map(async (e) => {
-          return await Land.methods.UserMapping(e).call();
+          const land = await Land.methods.UserMapping(e).call();
+          setLoading(false);
+          setArr((arr) => [...arr, land]);
         })
       );
-      setArr(userDetails);
+      setLoading(false);
     };
     fetchData();
   }, [toggle]);
 
   const handleVerify = async (e) => {
     try {
+      setLoading(true);
       await Land.methods.verifyUser(e.target.value).send({
         from: wadd
       });
-
+      setArr([]);
       setToggle(!toggle);
-      alert("User verified");
     } catch (err) {
       console.log("Error in verifying user");
+    } finally {
+      setLoading(false);
     }
   };
   console.log(arr);

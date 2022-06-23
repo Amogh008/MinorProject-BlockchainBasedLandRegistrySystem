@@ -9,16 +9,14 @@ const MyLands = () => {
   useEffect(() => {
     const fetchMyLands = async () => {
       setLoading(true);
-      const accounts = await web3.eth.getAccounts();
-      const lands = await Land.methods.myAllLands(accounts[0]).call();
+
+      const lands = await Land.methods.myAllLands(wadd).call();
       await Promise.all(
         lands.map(async (id) => {
-          await Land.methods
-            .lands(id)
-            .call()
-            .then((res) => {
-              setArr([...arr, res]);
-            });
+          const land = await Land.methods.lands(id).call();
+          setLoading(false);
+          setArr((arr) => [...arr, land]);
+          return land;
         })
       );
       setLoading(false);
@@ -31,9 +29,9 @@ const MyLands = () => {
       await Land.methods.makeItforSell(e.target.value).send({
         from: wadd
       });
-      setToggle(!toggle);
-      alert("Marked Land for sale");
       setLoading(false);
+      setToggle(!toggle);
+      setArr([]);
     } catch (err) {
       setLoading(false);
       alert(err);

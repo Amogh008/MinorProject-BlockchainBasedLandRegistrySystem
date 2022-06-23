@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { SocketContext } from "../../../context/SocketContext";
 import { Land } from "../../../Contract/LandContract";
 const VerifyLands = () => {
-  const { wadd } = useContext(SocketContext);
+  const { wadd, setLoading } = useContext(SocketContext);
   const [arr, setArr] = useState([]);
   const [toggle, setToggle] = useState(true);
   useEffect(() => {
     const fetch = async () => {
+      setLoading(true);
       const allLand = await Land.methods.ReturnAllLandList().call();
       const unVerified = [];
       await Promise.all(
@@ -18,24 +19,30 @@ const VerifyLands = () => {
         })
       );
 
-      const landDetails = await Promise.all(
+      await Promise.all(
         unVerified.map(async (e) => {
-          return await Land.methods.lands(e).call();
+          const land = await Land.methods.lands(e).call();
+          setLoading(false);
+
+          setArr((arr) => [...arr, land]);
         })
       );
-      setArr(landDetails);
+      setLoading(false);
     };
     fetch();
   }, [toggle]);
   const handleVerify = async (e) => {
     try {
+      setLoading(true);
       await Land.methods.verifyLand(e.target.value).send({
         from: wadd
       });
+      setArr([]);
       setToggle(!toggle);
-      alert("Land verified");
     } catch (err) {
       alert(err);
+    } finally {
+      setLoading(false);
     }
   };
   return (

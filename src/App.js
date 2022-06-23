@@ -17,7 +17,9 @@ import { useContext } from "react";
 import { SocketContext } from "./context/SocketContext";
 
 function App() {
-  const { loggedIn, isUser, isInspector, loading } = useContext(SocketContext);
+  const { loggedIn, isUser, isInspector, loading, detectChange } = useContext(
+    SocketContext
+  );
 
   return (
     <div className="App">
@@ -65,6 +67,13 @@ function App() {
       </div>
       {loading && (
         <div className="loading">
+          {detectChange && (
+            <div>
+              <h4>Account Change detected</h4>
+              <h5>Logging out. Relogin to continue</h5>
+              <br />
+            </div>
+          )}
           <div className="balls">
             <div></div>
             <div></div>
